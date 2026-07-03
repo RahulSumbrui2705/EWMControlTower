@@ -1,0 +1,42 @@
+{
+  "entities": {
+    "ActivityLog": {
+      "title": "Activity Log",
+      "description": "Represents a real-time log entry of an action taken by an AI agent.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of the log."
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "ISO timestamp or formatted time of the log."
+        },
+        "agentName": {
+          "type": "string",
+          "description": "Name of the AI agent taking the action."
+        },
+        "action": {
+          "type": "string",
+          "description": "Brief description of the action taken."
+        },
+        "issueId": {
+          "type": "string",
+          "description": "ID of the related warehouse exception or issue."
+        },
+        "details": {
+          "type": "string",
+          "description": "Short explanatory details or physical overrides implemented."
+        }
+      },
+      "required": ["id", "timestamp", "agentName", "action", "issueId", "details"]
+    }
+  },
+  "firestore": {
+    "/activityLogs/{logId}": {
+      "schema": "ActivityLog",
+      "description": "Collection of real-time activity logs from the AI agent swarm."
+    }
+  }
+}

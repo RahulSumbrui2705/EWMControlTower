@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #0A4D8C;
+  --color-primary-dark: #073b6c;
+  --color-accent-ai: #00B4D8;
+  --color-accent-ai-light: rgba(0, 180, 216, 0.15);
+  --color-bg-base: #F8FAFC;
+  --color-text-dark: #1E293B;
+  --color-text-secondary: #64748B;
+  --color-success-ewm: #10B981;
+  --color-warning-ewm: #F59E0B;
+  --color-danger-ewm: #EF4444;
+}
+
+/* Custom scrollbar and animations */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Pulse animation for AI system */
+@keyframes ai-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+}
+
+.ai-pulse-glow {
+  box-shadow: 0 0 15px rgba(0, 180, 216, 0.4);
+}
+
+@keyframes flow-dash {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+.animate-flow-dash {
+  stroke-dasharray: 5 5;
+  animation: flow-dash 1.2s linear infinite;
+}
+
+

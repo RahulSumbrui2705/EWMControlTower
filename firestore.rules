@@ -1,0 +1,34 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // 1. Catch-all security gate
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper: validate standard string sizes and patterns to prevent database pollution
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Helper: check if incoming data has correct keys and types
+    function isValidActivityLog(data) {
+      return data.keys().hasAll(['id', 'timestamp', 'agentName', 'action', 'issueId', 'details'])
+          && data.keys().size() == 6
+          && data.id is string && data.id.size() <= 100
+          && data.timestamp is string && data.timestamp.size() <= 100
+          && data.agentName is string && data.agentName.size() <= 100
+          && data.action is string && data.action.size() <= 150
+          && data.issueId is string && data.issueId.size() <= 100
+          && data.details is string && data.details.size() <= 500;
+    }
+
+    // 2. Rules for ActivityLogs
+    match /activityLogs/{logId} {
+      allow read, list: if true; // Activity logs can be read in real-time by operators
+      allow create: if isValidId(logId) && isValidActivityLog(request.resource.data);
+      allow update, delete: if false; // Logs are immutable audit trails
+    }
+  }
+}
